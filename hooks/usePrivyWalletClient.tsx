@@ -9,10 +9,11 @@ const usePrivyWalletClient = () => {
 
   useEffect(() => {
     const init = async () => {
-      const provider = await externalWallet.getEthereumProvider();
+      const provider = await externalWallet?.getEthereumProvider();
+      if (!provider) return;
       const response = createWalletClient({
         chain: CHAIN as Chain,
-        account: externalWallet.address as `0x${string}`,
+        account: externalWallet?.address as `0x${string}`,
         transport: custom(provider),
       });
       setWalletClient(response);

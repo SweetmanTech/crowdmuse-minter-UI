@@ -1,11 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import useConnectedWallet from './useConnectedWallet';
-import { ConnectedWallet } from '@privy-io/react-auth';
+import usePrivyWalletClient from './usePrivyWalletClient';
+import usdcAbi from '@/lib/abi/usdc.json';
+import { baseSepolia } from 'viem/chains';
+import { USDC } from '@/lib/consts';
 
 const useFaucetMint = () => {
   const { externalWallet } = useConnectedWallet();
-  const [minting, setMinting] = useState(false);
-  const [mintError, setMintError] = useState<string | null>(null);
+  const { walletClient } = usePrivyWalletClient();
 
   const mint = useCallback(async () => {
     const address = externalWallet?.address;
@@ -14,17 +16,22 @@ const useFaucetMint = () => {
     }
 
     try {
-      setMinting(true);
-      setMintError(null);
-      console.log('SWEETS MINT FAUCET WITH VIEM', address);
+      const request = {
+        address: USDC,
+        abi: usdcAbi,
+        functionName: 'mintTo',
+        chain: baseSepolia,
+        args: [address, 999999999n],
+        account: address,
+      };
+
+      await walletClient?.writeContract?.(request as any);
     } catch (error: any) {
-      setMintError(error.message);
-    } finally {
-      setMinting(false);
+      console.error(error.message);
     }
   }, [externalWallet]);
 
-  return { mint, minting, mintError };
+  return { mint };
 };
 
 export default useFaucetMint;
