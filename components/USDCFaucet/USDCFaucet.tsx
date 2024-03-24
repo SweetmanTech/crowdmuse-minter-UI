@@ -1,5 +1,5 @@
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/Card/Card';
-import Button from '@/components/Button';
+import ClaimUsdcButton from './ClaimUsdcButton';
 
 const USDCFaucet = () => (
   <Card className="w-full max-w-lg">
@@ -10,7 +10,7 @@ const USDCFaucet = () => (
       </CardDescription>
     </CardHeader>
     <CardContent className="flex flex gap-4 justify-center">
-      <Button className="bg-black w-[222px] rounded-xl py-3">Claim USDC</Button>
+      <ClaimUsdcButton />
     </CardContent>
   </Card>
 );
