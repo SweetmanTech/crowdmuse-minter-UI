@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@coinbase/onchainkit": "^0.9.5",
+    "@privy-io/react-auth": "^1.59.5",
     "@vercel/og": "^0.6.2",
     "@xmtp/frames-validator": "^0.5.2",
     "bufferutil": "^4.0.8",

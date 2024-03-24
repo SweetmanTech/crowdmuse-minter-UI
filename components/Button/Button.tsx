@@ -1,6 +1,6 @@
 'use client';
 
-const Button = ({ children, onClick, disabled, className }: any) => (
+const Button = ({ children, onClick = () => {}, disabled, className }: any) => (
   <button
     disabled={disabled}
     onClick={onClick}
