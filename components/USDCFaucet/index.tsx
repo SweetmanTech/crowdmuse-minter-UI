@@ -1,3 +1,3 @@
-import USDCPage from './USDCPage';
+import USDCFaucet from './USDCFaucet';
 
-export default USDCPage;
+export default USDCFaucet;
