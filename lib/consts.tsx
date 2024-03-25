@@ -15,6 +15,8 @@ export const DEFAULT_FRAME = {
 } as FrameMetadataType;
 export const FRAME_INPUT_PLACEHOLDER = '0x... or .eth';
 export const CHAIN = baseSepolia;
+export const DROP = '0x2B4Bf16393815090f8B9b1aECe118a6076e81BD9';
+export const MINTER = '0xa701deC0D72ae774f00b012744fEB4E64eDC2a2b';
 export const USDC = '0x63148156DACb0e8555287906F8FC229E0b11365b';
 export const SOUND_FACTORY = '0x0000000000aec84F5BFc2af15EAfb943bf4e3522';
 

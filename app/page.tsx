@@ -6,11 +6,11 @@ import { DEFAULT_FRAME, VERCEL_URL } from '@/lib/consts';
 const frameMetadata = { ...getFrameMetadata(DEFAULT_FRAME), 'of:accepts:xmtp': '2024-02-01' };
 
 export const metadata: Metadata = {
-  title: 'viem snapshot',
-  description: 'viem snapshot',
+  title: 'crowdmuse minter',
+  description: 'crowdmuse minter',
   openGraph: {
-    title: 'viem snapshot',
-    description: 'viem snapshot',
+    title: 'crowdmuse minter',
+    description: 'crowdmuse minter',
     images: [`https://${VERCEL_URL}/api/og`],
   },
   other: {
