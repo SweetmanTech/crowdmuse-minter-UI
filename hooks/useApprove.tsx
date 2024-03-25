@@ -26,8 +26,6 @@ const useApprove = () => {
           args: [spender, value],
           account: address,
         };
-        console.log('SWEETS request', request);
-
         await walletClient?.writeContract?.(request as any);
       } catch (error: any) {
         console.error(error.message);

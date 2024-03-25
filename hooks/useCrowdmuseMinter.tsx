@@ -18,7 +18,6 @@ const useCrowdmuseMinter = () => {
 
     try {
       const garmentType = keccak256(encodePacked(['string'], ['size:one']));
-      console.log('SWEETS garmentType', garmentType);
       const request = {
         address: MINTER,
         abi: abi,
@@ -27,8 +26,6 @@ const useCrowdmuseMinter = () => {
         args: [DROP, address, garmentType, 1, 'HELLO WORLD'],
         account: address,
       };
-      console.log('SWEETS request', request);
-
       await walletClient?.writeContract?.(request as any);
     } catch (error: any) {
       console.error(error.message);
