@@ -1,18 +1,34 @@
 import { useCallback } from 'react';
 import useConnectedWallet from './useConnectedWallet';
-import usePrivyWalletClient from './usePrivyWalletClient';
 import abi from '@/lib/abi/crowdmuse-basic-minter.json';
 import { baseSepolia } from 'viem/chains';
-import { encodePacked, keccak256 } from 'viem';
-import { DROP, MINTER } from '@/lib/consts';
+import { createWalletClient, custom, encodePacked, keccak256 } from 'viem';
+import { CHAIN, DROP, MINTER, PRICE, USDC } from '@/lib/consts';
+import approve from '@/lib/approve';
+import { toast } from 'react-toastify';
+import getAllowance from '@/lib/getAllowance';
 
 const useCrowdmuseMinter = () => {
-  const { externalWallet } = useConnectedWallet();
-  const { walletClient } = usePrivyWalletClient();
+  const { externalWallet, wallet, connectedWallet } = useConnectedWallet();
 
   const mint = useCallback(async () => {
     const address = externalWallet?.address;
     if (!address) {
+      return;
+    }
+    const provider = await (wallet as any).getEthereumProvider();
+    const walletClient = createWalletClient({
+      chain: CHAIN,
+      account: connectedWallet as `0x${string}`,
+      transport: custom(provider),
+    });
+    const allowance = (await getAllowance(USDC, address as any, MINTER)) as bigint;
+
+    if (allowance < PRICE) {
+      if (!walletClient) {
+        toast.error('missing wallet client to approve USDC spend', walletClient);
+      }
+      await approve(USDC, MINTER, address, PRICE, walletClient);
       return;
     }
 

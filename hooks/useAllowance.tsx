@@ -1,36 +1,25 @@
-import { useCallback } from 'react';
-import useConnectedWallet from './useConnectedWallet';
-import { getPublicClient } from '@/lib/clients';
-import { CHAIN } from '@/lib/consts';
-import { erc20Abi } from 'viem';
+import { useEffect, useState } from 'react';
+import getAllowance from '@/lib/getAllowance';
 
-const useAllowance = () => {
-  const { externalWallet } = useConnectedWallet();
+const useAllowance = (
+  erc20Address: `0x${string}`,
+  owner: `0x${string}`,
+  spender: `0x${string}`,
+) => {
+  const [allowance, setAllowance] = useState<bigint>(0n);
 
-  const allowance = useCallback(
-    async ({ erc20Address, owner, spender }: any) => {
-      const address = externalWallet?.address;
-      if (!address) {
-        return;
-      }
+  const refetch = async () => {
+    const response = await getAllowance(erc20Address, owner, spender);
+    if (!response) return;
+    setAllowance(response);
+  };
 
-      try {
-        const publicClient = getPublicClient(CHAIN.id);
-        const data = await publicClient.readContract({
-          address: erc20Address,
-          abi: erc20Abi,
-          functionName: 'allowance',
-          args: [owner, spender],
-        });
-        return data;
-      } catch (error: any) {
-        console.error(error.message);
-      }
-    },
-    [externalWallet],
-  );
+  useEffect(() => {
+    if (!erc20Address || !owner || !spender) return;
+    refetch();
+  }, [erc20Address, owner, spender]);
 
-  return { allowance };
+  return { allowance, refetch };
 };
 
 export default useAllowance;

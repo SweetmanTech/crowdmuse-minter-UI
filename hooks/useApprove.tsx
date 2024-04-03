@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 import useConnectedWallet from './useConnectedWallet';
 import usePrivyWalletClient from './usePrivyWalletClient';
-import abi from '@/lib/abi/crowdmuse-product.json';
-import { baseSepolia } from 'viem/chains';
-import { encodePacked, erc20Abi, keccak256 } from 'viem';
-import { CHAIN, USDC } from '@/lib/consts';
+import { erc20Abi } from 'viem';
+import { CHAIN } from '@/lib/consts';
 
 const useApprove = () => {
   const { externalWallet } = useConnectedWallet();
@@ -26,7 +24,8 @@ const useApprove = () => {
           args: [spender, value],
           account: address,
         };
-        await walletClient?.writeContract?.(request as any);
+        const hash = await walletClient?.writeContract?.(request as any);
+        return hash;
       } catch (error: any) {
         console.error(error.message);
       }
